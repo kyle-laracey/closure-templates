@@ -13,7 +13,7 @@ Syntax (basic form):
 With all optional attributes:
 
 ```soy
-{namespace <namespace> requirecss="<NAMESPACE>.<CSS_ELEMENT>" cssbase="<NAMESPACE>.<CSS_BASE>"}
+{namespace <namespace> requirecsspath="<CSS_FILE>" cssprefix="<PREFIX>" requirecss="<NAMESPACE>.<CSS_ELEMENT>" cssbase="<NAMESPACE>.<CSS_BASE>"}
 ```
 
 These are the `namespace` tag's attributes:
