@@ -92,6 +92,7 @@ import com.google.template.soy.soytree.FileSetMetadata;
 import com.google.template.soy.soytree.Metadata;
 import com.google.template.soy.soytree.Metadata.CompilationUnitAndKind;
 import com.google.template.soy.soytree.SoyFileSetNode;
+import com.google.template.soy.styleheaders.GenCssPintoModFileVisitor;
 import com.google.template.soy.tofu.SoyTofu;
 import com.google.template.soy.tofu.internal.BaseTofu;
 import com.google.template.soy.types.SoyTypeRegistry;
@@ -664,13 +665,25 @@ public final class SoyFileSet {
   ImmutableList<GeneratedFile> generateInvocationBuilders(String javaPackage) {
     return entryPoint(
         () -> {
-          ParseResult result = parseForGenJava();
+          ParseResult result = parseWithoutOptimizingOrDesugaringHtml();
           throwIfErrorsPresent();
           SoyFileSetNode soyTree = result.fileSet();
 
           // Generate template invocation builders for the soy tree.
           return new GenInvocationBuildersVisitor(errorReporter, javaPackage, result.registry())
               .exec(soyTree);
+        });
+  }
+
+  ImmutableList<String> generateCssPintoModFiles() {
+    return entryPoint(
+        () -> {
+          ParseResult result = parseWithoutOptimizingOrDesugaringHtml();
+          throwIfErrorsPresent();
+          SoyFileSetNode soyTree = result.fileSet();
+
+          // Generate JS @pintomodule files to create CSS modules for each Soy file.
+          return new GenCssPintoModFileVisitor().gen(soyTree);
         });
   }
 
@@ -687,7 +700,7 @@ public final class SoyFileSet {
   ImmutableList<GeneratedFile> generateParseInfo(String javaPackage, String javaClassNameSource) {
     return entryPoint(
         () -> {
-          ParseResult result = parseForGenJava();
+          ParseResult result = parseWithoutOptimizingOrDesugaringHtml();
           throwIfErrorsPresent();
 
           SoyFileSetNode soyTree = result.fileSet();
@@ -1161,7 +1174,7 @@ public final class SoyFileSet {
    * Parses the file set with the options we need for writing generated java *SoyInfo and invocation
    * builders.
    */
-  private ParseResult parseForGenJava() {
+  private ParseResult parseWithoutOptimizingOrDesugaringHtml() {
     // N.B. we do not run the optimizer here for 2 reasons:
     // 1. it would just waste time, since we are not running code generation the optimization
     //    work doesn't help anything
