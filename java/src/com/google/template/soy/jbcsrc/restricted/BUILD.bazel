@@ -48,5 +48,8 @@ java_library(
         "@maven//:org_ow2_asm_asm",
         "@maven//:org_ow2_asm_asm_commons",
         "@maven//:org_ow2_asm_asm_util",
+        "@maven//:javax_inject_javax_inject",
+        "@maven//:javax_annotation_jsr250_api",
+        "@maven//:com_google_common_html_types_types"
     ],
 )

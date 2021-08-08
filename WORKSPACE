@@ -72,6 +72,7 @@ maven_install(
         ),
         "com.ibm.icu:icu4j:57.1",
         "javax.inject:javax.inject:1",
+        "javax.annotation:jsr250-api:1.0",
         maven.artifact(
             "junit",
             "junit",

@@ -297,7 +297,6 @@ public abstract class AbstractSoyCompiler {
     sfsBuilder
         .addSourceFunctions(sourceFunctions)
         .setWarningSink(err)
-        .setJavaPluginValidator(new DelegatingMethodChecker(builder.build()))
         .setValidatedLoggingConfig(parseLoggingConfig())
         // Set experimental features that are not generally available.
         .setExperimentalFeatures(experimentalFeatures)

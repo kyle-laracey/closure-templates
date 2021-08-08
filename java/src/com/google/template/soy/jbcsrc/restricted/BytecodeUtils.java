@@ -32,7 +32,7 @@ import com.google.common.html.types.TrustedResourceUrl;
 import com.google.common.html.types.TrustedResourceUrlProto;
 import com.google.common.primitives.Ints;
 import com.google.protobuf.Message;
-import com.google.protobuf.contrib.JavaQualifiedNames;
+import com.google.template.soy.internal.proto.JavaQualifiedNames;
 import com.google.template.soy.base.internal.SanitizedContentKind;
 import com.google.template.soy.data.Dir;
 import com.google.template.soy.data.LoggingAdvisingAppendable;
